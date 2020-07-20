@@ -13,12 +13,20 @@ public class SocketRunnable implements Runnable {
         MessageReceiver receiverFromServer = new MessageReceiver(socket.getInputStream());
 
         String messageFromServer;
-        while ((messageFromServer = receiverFromServer.readMessage()) != null) {
-            if (messageFromServer.contains(" failed")) {
-                System.out.println(messageFromServer);
-                System.exit(0);
-            }
+        String userName = "";
+        if ((messageFromServer = receiverFromServer.readMessage()).contains(" failed")) {
             System.out.println(messageFromServer);
+            System.exit(0);
+        } else {
+            System.out.println(messageFromServer);
+            userName = messageFromServer.split(" ")[2];
+        }
+        while ((messageFromServer = receiverFromServer.readMessage()) != null) {
+            if (messageFromServer.split(" ")[1].charAt(0) == '@' && messageFromServer.toUpperCase().contains(userName)) {
+                System.out.println(messageFromServer);
+            } else if (messageFromServer.split(" ")[1].charAt(0) != '@') {
+                System.out.println(messageFromServer);
+            }
         }
     }
 
