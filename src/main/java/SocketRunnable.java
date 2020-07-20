@@ -13,6 +13,10 @@ public class SocketRunnable implements Runnable {
         MessageReceiver receiverFromServer = new MessageReceiver(socket.getInputStream());
 
         String messageFromServer;
+        if ((messageFromServer = receiverFromServer.readMessage()).contains(" failed")) {
+            System.out.println(messageFromServer);
+            System.exit(0);
+        }
         while ((messageFromServer = receiverFromServer.readMessage()) != null) {
             System.out.println(messageFromServer);
         }
