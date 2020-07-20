@@ -14,7 +14,7 @@ public class Client {
             MessageReceiver messageReceiver = new MessageReceiver(System.in);
             MessageSender messageSender = new MessageSender(socket.getOutputStream());
 
-            registration(messageReceiver, messageSender);
+            registrationOrAuthirization(messageReceiver, messageSender);
 
             new Thread(new SocketRunnable(socket)).start();
 
@@ -25,17 +25,20 @@ public class Client {
         }
     }
 
-    private void registration(MessageReceiver messageReceiver, MessageSender messageSender) {
+    private void registrationOrAuthirization(MessageReceiver messageReceiver, MessageSender messageSender) {
         System.out.println("----------------------------");
-        System.out.println("Добро пожаловать в наш Чат!");
+        System.out.println("Welcome to our chat!");
         System.out.println("----------------------------");
 
-        System.out.println("Введите имя:");
+        System.out.println("Enter: Registration or Authorization:");
+        String enter = messageReceiver.readMessage();
+        System.out.println("Enter name:");
         String name = messageReceiver.readMessage();
-        System.out.println("Введите пароль:");
+        System.out.println("Enter password:");
         String password = messageReceiver.readMessage();
 
-        messageSender.sendMessage("Registration " + name + " " + password);
+        messageSender.sendMessage(enter + " " + name + " " + password);
     }
+
 
 }
