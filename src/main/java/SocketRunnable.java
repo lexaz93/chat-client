@@ -22,9 +22,9 @@ public class SocketRunnable implements Runnable {
             userName = messageFromServer.split(" ")[2];
         }
         while ((messageFromServer = receiverFromServer.readMessage()) != null) {
-            if (messageFromServer.split(" ")[1].charAt(0) == '@' && messageFromServer.toUpperCase().contains(userName)) {
+            if (messageFromServer.length() > 1 && messageFromServer.split(" ")[1].charAt(0) == '@' && messageFromServer.toUpperCase().contains(userName)) {
                 System.out.println(messageFromServer);
-            } else if (messageFromServer.split(" ")[1].charAt(0) != '@') {
+            } else if (messageFromServer.length() > 1 && messageFromServer.split(" ")[1].charAt(0) != '@') {
                 System.out.println(messageFromServer);
             }
         }
